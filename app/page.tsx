@@ -181,7 +181,10 @@ export default function Home() {
       )}
 
       {mode === 'librarian-panel' && (
-        <LibrarianPanel onBack={handleLogout} />
+        <LibrarianPanel 
+          onBack={handleLogout} 
+          onNavigateToSettings={() => setMode('librarian-settings')}
+        />
       )}
 
       {mode === 'librarian-settings' && currentUser && (

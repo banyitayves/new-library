@@ -1,0 +1,49 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Outer circle -->
+  <circle cx="100" cy="100" r="95" fill="#1e3c72" stroke="#ffd700" stroke-width="3"/>
+  
+  <!-- Inner circle background -->
+  <circle cx="100" cy="100" r="85" fill="#2a5298" stroke="none"/>
+  
+  <!-- Shield shape -->
+  <path d="M 100 40 L 140 60 L 140 110 Q 100 150 100 150 Q 100 150 60 110 L 60 60 Z" fill="#ffd700" stroke="#fff" stroke-width="2"/>
+  
+  <!-- Book symbol in shield -->
+  <g transform="translate(100, 90)">
+    <!-- Book pages -->
+    <rect x="-20" y="-15" width="15" height="30" fill="#1e3c72" stroke="#fff" stroke-width="1"/>
+    <rect x="-5" y="-15" width="15" height="30" fill="#2a5298" stroke="#fff" stroke-width="1"/>
+    <line x1="-12.5" y1="-15" x2="-12.5" y2="15" stroke="#fff" stroke-width="1"/>
+    <line x1="2.5" y1="-15" x2="2.5" y2="15" stroke="#fff" stroke-width="1"/>
+  </g>
+  
+  <!-- Wheat/leaves on sides -->
+  <!-- Left wheat -->
+  <g transform="translate(40, 100)">
+    <path d="M 0 -20 Q -5 -10 -3 0 Q 0 10 5 18" stroke="#ffd700" stroke-width="2" fill="none"/>
+    <circle cx="-8" cy="-25" r="2" fill="#ffd700"/>
+    <circle cx="-12" cy="-15" r="2" fill="#ffd700"/>
+    <circle cx="-10" cy="-5" r="2" fill="#ffd700"/>
+  </g>
+  
+  <!-- Right wheat -->
+  <g transform="translate(160, 100)">
+    <path d="M 0 -20 Q 5 -10 3 0 Q 0 10 -5 18" stroke="#ffd700" stroke-width="2" fill="none"/>
+    <circle cx="8" cy="-25" r="2" fill="#ffd700"/>
+    <circle cx="12" cy="-15" r="2" fill="#ffd700"/>
+    <circle cx="10" cy="-5" r="2" fill="#ffd700"/>
+  </g>
+  
+  <!-- School text -->
+  <text x="100" y="175" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#ffd700" text-anchor="middle">
+    G.S. BUSANZA
+  </text>
+  
+  <!-- Decorative stars -->
+  <g fill="#ffd700">
+    <circle cx="70" cy="25" r="3"/>
+    <circle cx="130" cy="25" r="3"/>
+    <circle cx="35" cy="70" r="2.5"/>
+    <circle cx="165" cy="70" r="2.5"/>
+  </g>
+</svg>

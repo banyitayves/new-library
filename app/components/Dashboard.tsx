@@ -61,6 +61,7 @@ export default function Dashboard({
       <div className="main-menu">
         <div className="menu-container">
           <div className="menu-header">
+            <img src="/school-logo.svg" alt="GS Busanza" className="dashboard-logo" />
             <h1>📚 GS Busanza Library</h1>
             <p>Advanced Library Management System</p>
           </div>
@@ -171,6 +172,13 @@ export default function Dashboard({
               padding: 50px 40px;
               text-align: center;
               box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            }
+
+            .dashboard-logo {
+              max-width: 80px;
+              max-height: 80px;
+              object-fit: contain;
+              margin-bottom: 15px;
             }
 
             .menu-header h1 {

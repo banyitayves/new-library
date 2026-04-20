@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Mail, Lock, User, Phone, BookOpen, LogIn, UserPlus } from 'lucide-react'
-import { registerUser, loginUser } from '@/lib/database'
+import { registerUser, loginUser, STREAM_OPTIONS, STREAM_NAMES, type StreamCombination } from '@/lib/database'
 
 interface LoginRegisterProps {
   onLoginSuccess: (user: any) => void
@@ -27,6 +27,7 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
   const [regPhone, setRegPhone] = useState('')
   const [regRole, setRegRole] = useState<'student' | 'teacher'>('student')
   const [regClass, setRegClass] = useState('S1')
+  const [regStream, setRegStream] = useState<StreamCombination | ''>('')
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -66,6 +67,13 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
         return
       }
 
+      // Validate stream selection for S4, S5, S6
+      if ((regClass === 'S4' || regClass === 'S5' || regClass === 'S6') && regRole === 'student' && !regStream) {
+        setError('Please select your class combination/stream')
+        setLoading(false)
+        return
+      }
+
       const newUser = registerUser({
         name: regName,
         email: regEmail,
@@ -73,6 +81,7 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
         phone: regPhone,
         role: regRole,
         class: regRole === 'student' ? regClass : undefined,
+        stream: regRole === 'student' && regStream ? (regStream as StreamCombination) : undefined,
         interests: [],
         maxBooks: 1,
         status: 'pending',
@@ -98,7 +107,9 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
     <div className="auth-container">
       <div className="auth-card">
         <div className="auth-header">
-          <BookOpen size={40} className="auth-icon" />
+          <div className="school-logo-container">
+            <img src="/school-logo.svg" alt="GS Busanza" className="school-logo" />
+          </div>
           <h1>GS Busanza Library</h1>
           <p>Manage Books, Grow Knowledge</p>
         </div>
@@ -182,13 +193,34 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
               {regRole === 'student' && (
                 <div className="form-group">
                   <label>Class</label>
-                  <select value={regClass} onChange={(e) => setRegClass(e.target.value)}>
+                  <select value={regClass} onChange={(e) => {
+                    setRegClass(e.target.value)
+                    setRegStream('') // Reset stream when class changes
+                  }}>
                     <option value="S1">S1</option>
                     <option value="S2">S2</option>
                     <option value="S3">S3</option>
                     <option value="S4">S4</option>
                     <option value="S5">S5</option>
                     <option value="S6">S6</option>
+                  </select>
+                </div>
+              )}
+
+              {regRole === 'student' && (regClass === 'S4' || regClass === 'S5' || regClass === 'S6') && (
+                <div className="form-group">
+                  <label>Combination/Stream</label>
+                  <select 
+                    value={regStream} 
+                    onChange={(e) => setRegStream(e.target.value as StreamCombination | '')}
+                    required
+                  >
+                    <option value="">-- Select your combination --</option>
+                    {STREAM_OPTIONS[regClass]?.map((stream) => (
+                      <option key={stream} value={stream}>
+                        {STREAM_NAMES[stream]}
+                      </option>
+                    ))}
                   </select>
                 </div>
               )}
@@ -310,6 +342,19 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
         .auth-header {
           text-align: center;
           margin-bottom: 30px;
+        }
+
+        .school-logo-container {
+          margin-bottom: 15px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .school-logo {
+          max-width: 80px;
+          max-height: 80px;
+          object-fit: contain;
         }
 
         .auth-icon {

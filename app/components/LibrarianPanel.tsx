@@ -16,9 +16,10 @@ import {
 
 interface LibrarianPanelProps {
   onBack: () => void
+  onNavigateToSettings?: () => void
 }
 
-export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
+export default function LibrarianPanel({ onBack, onNavigateToSettings }: LibrarianPanelProps) {
   const [view, setView] = useState<'pending' | 'approved' | 'all'>('pending')
   const [currentSection, setCurrentSection] = useState<'users' | 'reports' | 'sms' | 'books' | 'members'>('users')
   const [pendingUsers, setPendingUsers] = useState<any[]>([])
@@ -108,6 +109,11 @@ export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
           <button onClick={() => setShowImportModal(true)} className="btn btn-primary">
             <Upload size={18} /> Import CSV
           </button>
+          {onNavigateToSettings && (
+            <button onClick={onNavigateToSettings} className="btn btn-primary">
+              <Settings size={18} /> Settings
+            </button>
+          )}
           <button onClick={onBack} className="btn btn-secondary">
             <LogOut size={18} /> Logout
           </button>

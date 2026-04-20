@@ -3,6 +3,23 @@
 
 export type UserRole = 'student' | 'teacher' | 'librarian' | 'deputy' | 'guest'
 export type RegistrationStatus = 'pending' | 'approved' | 'rejected'
+export type StreamCombination = 'MS' | 'LAH' | 'TEC' | 'LFK' | 'HGL' | 'MCE'
+
+// Stream combinations by class
+export const STREAM_OPTIONS: Record<string, StreamCombination[]> = {
+  'S4': ['MS', 'LAH', 'TEC'], // Maths & Science, Languages & Arts & Humanities, Technical
+  'S5': ['LFK', 'HGL', 'MCE'], // LFK, HGL, MCE
+  'S6': ['LFK', 'HGL', 'MCE'], // LFK, HGL, MCE
+}
+
+export const STREAM_NAMES: Record<StreamCombination, string> = {
+  'MS': 'Maths & Science',
+  'LAH': 'Languages & Arts & Humanities',
+  'TEC': 'Technical',
+  'LFK': 'LFK',
+  'HGL': 'HGL',
+  'MCE': 'MCE',
+}
 
 export interface User {
   id: string
@@ -16,6 +33,7 @@ export interface User {
   studentId?: string
   cardBarcode?: string
   class?: string // S1 to S6
+  stream?: StreamCombination // Class combination/stream (S4, S5, S6)
   interests: string[] // Study interests for AI recommendations
   currentBooks?: string[]
   maxBooks: number

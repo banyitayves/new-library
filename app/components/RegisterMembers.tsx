@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { UserPlus, AlertCircle, CheckCircle } from 'lucide-react'
-import { registerUser, getUsers } from '@/lib/database'
+import { registerUser, getUsers, STREAM_OPTIONS, STREAM_NAMES, type StreamCombination } from '@/lib/database'
 
 interface RegisterMembersProps {
   onBack: () => void
@@ -18,6 +18,7 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
     confirmPassword: '',
     phone: '',
     class: 'S1',
+    stream: '' as StreamCombination | '',
     studentId: '',
     barcode: '',
   })
@@ -72,6 +73,13 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
         return
       }
 
+      // Validate stream selection for S4, S5, S6
+      if (role === 'student' && (formData.class === 'S4' || formData.class === 'S5' || formData.class === 'S6') && !formData.stream) {
+        setMessage({ type: 'error', text: 'Please select class combination/stream for S4, S5, or S6' })
+        setLoading(false)
+        return
+      }
+
       // Check email uniqueness
       const existingUsers = getUsers()
       if (existingUsers.some(u => u.email === formData.email)) {
@@ -87,6 +95,7 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
         role: role,
         phone: formData.phone,
         class: role === 'student' ? formData.class : undefined,
+        stream: role === 'student' && formData.stream ? (formData.stream as StreamCombination) : undefined,
         studentId: role === 'student' ? formData.studentId : undefined,
         barcode: formData.barcode || `BAR-${Math.random().toString(36).substr(2, 10)}`,
         status: 'approved', // Auto-approve for manually added members
@@ -102,6 +111,7 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
         confirmPassword: '',
         phone: '',
         class: 'S1',
+        stream: '',
         studentId: '',
         barcode: '',
       })
@@ -182,12 +192,38 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
               <>
                 <div className="form-group">
                   <label>Class</label>
-                  <select name="class" value={formData.class} onChange={handleChange}>
+                  <select 
+                    name="class" 
+                    value={formData.class} 
+                    onChange={(e) => {
+                      handleChange(e)
+                      setFormData(prev => ({ ...prev, stream: '' }))
+                    }}
+                  >
                     {classes.map(cls => (
                       <option key={cls} value={cls}>{cls}</option>
                     ))}
                   </select>
                 </div>
+
+                {(formData.class === 'S4' || formData.class === 'S5' || formData.class === 'S6') && (
+                  <div className="form-group">
+                    <label>Combination/Stream *</label>
+                    <select 
+                      name="stream" 
+                      value={formData.stream} 
+                      onChange={(e) => setFormData(prev => ({ ...prev, stream: e.target.value as StreamCombination | '' }))}
+                      required
+                    >
+                      <option value="">-- Select your combination --</option>
+                      {STREAM_OPTIONS[formData.class]?.map((stream) => (
+                        <option key={stream} value={stream}>
+                          {STREAM_NAMES[stream]}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 <div className="form-group">
                   <label>Student ID</label>
