@@ -196,8 +196,7 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
                     name="class" 
                     value={formData.class} 
                     onChange={(e) => {
-                      handleChange(e)
-                      setFormData(prev => ({ ...prev, stream: '' }))
+                      setFormData(prev => ({ ...prev, class: e.target.value, stream: '' }))
                     }}
                   >
                     {classes.map(cls => (
