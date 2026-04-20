@@ -49,7 +49,6 @@ export default function Home() {
     if (stored) {
       const user = JSON.parse(stored)
       setCurrentUser(user)
-      setIsAuthenticated(true)
 
       // Determine initial mode based on role and status
       if (user.role === 'librarian') {
@@ -71,7 +70,6 @@ export default function Home() {
       status: 'approved',
     }
     setCurrentUser(librarianUser)
-    setIsAuthenticated(true)
     setMode('librarian-panel')
     localStorage.setItem('currentUser', JSON.stringify(librarianUser))
   }
@@ -84,7 +82,6 @@ export default function Home() {
 
   const handleLoginSuccess = (user: any) => {
     setCurrentUser(user)
-    setIsAuthenticated(true)
     localStorage.setItem('currentUser', JSON.stringify(user))
 
     // Route based on role
@@ -101,7 +98,6 @@ export default function Home() {
 
   const handleLogout = () => {
     setCurrentUser(null)
-    setIsAuthenticated(false)
     setMode('menu')
     localStorage.removeItem('currentUser')
   }
