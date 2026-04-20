@@ -13,6 +13,7 @@ import AIRecommendations from './components/AIRecommendations'
 import QASystem from './components/QASystem'
 import LibrarianPanel from './components/LibrarianPanel'
 import DeputyPanel from './components/DeputyPanel'
+import SearchBooks from './components/SearchBooks'
 import GuestMode from './components/GuestMode'
 import './globals.css'
 
@@ -30,6 +31,7 @@ export default function Home() {
     | 'guest-mode'
     | 'ai-recommendations'
     | 'qa-system'
+    | 'search-books'
   >('menu')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -194,6 +196,13 @@ export default function Home() {
           userId={currentUser.id}
           userName={currentUser.name}
           userRole={currentUser.role}
+          onBack={() => setMode('student-dashboard')}
+        />
+      )}
+
+      {mode === 'search-books' && currentUser && (
+        <SearchBooks
+          userId={currentUser.id}
           onBack={() => setMode('student-dashboard')}
         />
       )}

@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, Users, CheckCircle, XCircle, Mail, Phone, Calendar } from 'lucide-react'
+import { Shield, Users, CheckCircle, XCircle, Mail, Phone, Calendar, Upload, LogOut } from 'lucide-react'
+import ImportCSV from './ImportCSV'
 import {
   getPendingRegistrations,
   approveRegistration,
@@ -19,6 +20,7 @@ export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
   const [approvedUsers, setApprovedUsers] = useState<any[]>([])
   const [allUsers, setAllUsers] = useState<any[]>([])
   const [selectedUser, setSelectedUser] = useState<any>(null)
+  const [showImportModal, setShowImportModal] = useState(false)
 
   useEffect(() => {
     loadUsers()
@@ -59,15 +61,32 @@ export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
   return (
     <div className="librarian-container">
       <div className="librarian-header">
-        <button onClick={onBack} className="back-btn">
-          ← Back
-        </button>
         <div className="header-content">
           <Shield size={32} className="header-icon" />
-          <h1>Librarian Control Panel</h1>
-          <p>Manage user registrations and library settings</p>
+          <div>
+            <h1>Librarian Control Panel</h1>
+            <p>Manage registrations, members & books</p>
+          </div>
+        </div>
+        <div className="header-actions">
+          <button onClick={() => setShowImportModal(true)} className="btn btn-primary">
+            <Upload size={18} /> Import CSV
+          </button>
+          <button onClick={onBack} className="btn btn-secondary">
+            <LogOut size={18} /> Logout
+          </button>
         </div>
       </div>
+
+      {showImportModal && (
+        <ImportCSV
+          onClose={() => setShowImportModal(false)}
+          onSuccess={() => {
+            setShowImportModal(false)
+            loadUsers()
+          }}
+        />
+      )}
 
       <div className="librarian-content">
         {!selectedUser ? (
