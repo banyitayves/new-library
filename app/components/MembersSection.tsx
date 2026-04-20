@@ -26,7 +26,10 @@ export default function MembersSection() {
 
   const handleAddMember = (e: React.FormEvent) => {
     e.preventDefault()
-    const newMember = addMember(formData)
+    const newMember = addMember({
+      ...formData,
+      joinDate: new Date().toISOString()
+    })
     setMembers([...members, newMember])
     setFormData({ name: '', email: '', phone: '', maxBooks: 1, studentId: '', cardBarcode: '', class: 'S1' })
     setShowForm(false)

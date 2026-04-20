@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+// Removed unused React hooks import
 import { Monitor, LogIn } from 'lucide-react'
 
 interface KioskMainMenuProps {

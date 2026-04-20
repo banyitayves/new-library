@@ -5,7 +5,7 @@ import Dashboard from './components/Dashboard'
 import AuthModal from './components/AuthModal'
 import KioskLoginComponent from './components/KioskLogin'
 import KioskModeComponent from './components/KioskMode'
-import KioskMainMenuComponent from './components/KioskMainMenu'
+// Removed unused KioskMainMenuComponent import
 import LoginRegister from './components/LoginRegister'
 import PendingApproval from './components/PendingApproval'
 import StudentDashboard from './components/StudentDashboard'
@@ -41,7 +41,7 @@ export default function Home() {
     | 'ai-chat'
     | 'help-contact'
   >('menu')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  // Removed unused isAuthenticated state
   const [currentUser, setCurrentUser] = useState<any>(null)
 
   useEffect(() => {

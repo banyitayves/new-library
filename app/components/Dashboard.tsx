@@ -5,7 +5,7 @@ import BooksSection from './BooksSection'
 import MembersSection from './MembersSection'
 import TransactionsSection from './TransactionsSection'
 import NotificationsSection from './NotificationsSection'
-import { LogOut, Home, BookOpen, Users, Send, Bell, Sparkles, Users2, QrCode, Bot } from 'lucide-react'
+import { LogOut, Home, BookOpen, Users, Send, Bell, Users2, QrCode, Bot } from 'lucide-react'
 
 interface DashboardProps {
   user?: any
