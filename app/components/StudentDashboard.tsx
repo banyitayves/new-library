@@ -11,6 +11,7 @@ import {
   Clock,
   Search,
   Bot,
+  HelpCircle,
 } from 'lucide-react'
 import {
   getBooks,
@@ -169,6 +170,13 @@ export default function StudentDashboard({
           >
             <MessageCircle size={20} />
             <span>Ask Questions</span>
+          </button>
+          <button
+            onClick={() => onNavigate('help-contact')}
+            className="feature-btn"
+          >
+            <HelpCircle size={20} />
+            <span>Need Help?</span>
           </button>
         </div>
 

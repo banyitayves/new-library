@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, Users, CheckCircle, XCircle, Mail, Phone, Calendar, Upload, LogOut, BarChart3, MessageSquare, BookPlus, UserPlus } from 'lucide-react'
+import { Shield, Users, CheckCircle, XCircle, Mail, Phone, Calendar, Upload, LogOut, BarChart3, MessageSquare, BookPlus, UserPlus, Settings } from 'lucide-react'
 import ImportCSV from './ImportCSV'
 import BorrowingReport from './BorrowingReport'
 import SMSNotifications from './SMSNotifications'

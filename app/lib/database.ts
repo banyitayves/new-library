@@ -488,3 +488,76 @@ export function likeAnswer(questionId: string, answerId: string) {
     }
   }
 }
+
+// ===== LIBRARIAN EMAIL & NOTIFICATIONS =====
+
+export interface LibrarianSettings {
+  id: string
+  librarianId: string
+  email: string
+  enableEmailNotifications: boolean
+  notifyOnBorrow: boolean
+  notifyOnReturn: boolean
+  notifyOnHelpRequest: boolean
+}
+
+export function getLibrarianSettings(): LibrarianSettings | null {
+  if (typeof window === 'undefined') return null
+  try {
+    const stored = localStorage.getItem('librarianSettings')
+    return stored ? JSON.parse(stored) : null
+  } catch {
+    return null
+  }
+}
+
+export function setLibrarianEmail(librarianId: string, email: string): LibrarianSettings {
+  if (typeof window === 'undefined') return {} as LibrarianSettings
+
+  const settings: LibrarianSettings = {
+    id: Date.now().toString(),
+    librarianId,
+    email,
+    enableEmailNotifications: true,
+    notifyOnBorrow: true,
+    notifyOnReturn: true,
+    notifyOnHelpRequest: true,
+  }
+
+  localStorage.setItem('librarianSettings', JSON.stringify(settings))
+  
+  // Also update the librarian user's email
+  const users = getUsers()
+  const librarian = users.find(u => u.id === librarianId)
+  if (librarian) {
+    librarian.email = email
+    saveUsers(users)
+  }
+
+  return settings
+}
+
+export function updateLibrarianNotificationSettings(
+  librarianId: string,
+  settings: Partial<LibrarianSettings>
+): LibrarianSettings {
+  if (typeof window === 'undefined') return {} as LibrarianSettings
+
+  let currentSettings = getLibrarianSettings()
+  if (!currentSettings) {
+    currentSettings = {
+      id: Date.now().toString(),
+      librarianId,
+      email: '',
+      enableEmailNotifications: true,
+      notifyOnBorrow: true,
+      notifyOnReturn: true,
+      notifyOnHelpRequest: true,
+    }
+  }
+
+  const updated = { ...currentSettings, ...settings }
+  localStorage.setItem('librarianSettings', JSON.stringify(updated))
+
+  return updated
+}

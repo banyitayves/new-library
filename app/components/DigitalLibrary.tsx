@@ -60,6 +60,16 @@ const SAMPLE_DIGITAL_BOOKS = [
     coverColor: '#FF69B4',
     isDigital: true,
   },
+  {
+    id: 'pdf-006',
+    title: 'Mine Boy',
+    author: 'Peter Abrahams',
+    category: 'African Literature',
+    tags: ['african', 'fiction', 'contemporary', 'coming-of-age'],
+    summary: 'A powerful story of a young man from the rural areas of South Africa who comes to the city to find work in the mines. Through his journey, the novel explores themes of identity, class struggle, and the human spirit against oppression.',
+    coverColor: '#8B4513',
+    isDigital: true,
+  },
 ]
 
 export default function DigitalLibrary({ onNavigate }: DigitalLibraryProps) {

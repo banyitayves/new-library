@@ -17,6 +17,8 @@ import SearchBooks from './components/SearchBooks'
 import GuestMode from './components/GuestMode'
 import DigitalLibrary from './components/DigitalLibrary'
 import AIChat from './components/AIChat'
+import HelpContact from './components/HelpContact'
+import LibrarianSettings from './components/LibrarianSettings'
 import './globals.css'
 
 export default function Home() {
@@ -29,6 +31,7 @@ export default function Home() {
     | 'pending-approval'
     | 'student-dashboard'
     | 'librarian-panel'
+    | 'librarian-settings'
     | 'deputy-panel'
     | 'guest-mode'
     | 'ai-recommendations'
@@ -36,6 +39,7 @@ export default function Home() {
     | 'search-books'
     | 'digital-library'
     | 'ai-chat'
+    | 'help-contact'
   >('menu')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -180,6 +184,13 @@ export default function Home() {
         <LibrarianPanel onBack={handleLogout} />
       )}
 
+      {mode === 'librarian-settings' && currentUser && (
+        <LibrarianSettings 
+          onBack={() => setMode('librarian-panel')} 
+          librarianId={currentUser.id}
+        />
+      )}
+
       {mode === 'deputy-panel' && (
         <DeputyPanel onLogout={handleLogout} />
       )}
@@ -218,6 +229,13 @@ export default function Home() {
 
       {mode === 'ai-chat' && (
         <AIChat onClose={() => setMode(currentUser ? 'student-dashboard' : 'menu')} />
+      )}
+
+      {mode === 'help-contact' && currentUser && (
+        <HelpContact 
+          onBack={() => setMode('student-dashboard')} 
+          currentUser={currentUser}
+        />
       )}
     </main>
   )
