@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BookOpen, QrCode, LogIn } from 'lucide-react'
+import { BookOpen, QrCode, LogIn, Scan } from 'lucide-react'
 import { findMemberByStudentId, findMemberByBarcode } from '@/lib/database'
 
 interface KioskLoginProps {
@@ -115,7 +115,7 @@ export default function KioskLogin({ onLogin, onBackToMain }: KioskLoginProps) {
               />
             </div>
             <button type="submit" className="kiosk-btn kiosk-btn-primary">
-              <Barcode size={20} /> Scan & Login
+              <Scan size={20} /> Scan & Login
             </button>
           </form>
         )}

@@ -15,6 +15,8 @@ import LibrarianPanel from './components/LibrarianPanel'
 import DeputyPanel from './components/DeputyPanel'
 import SearchBooks from './components/SearchBooks'
 import GuestMode from './components/GuestMode'
+import DigitalLibrary from './components/DigitalLibrary'
+import AIChat from './components/AIChat'
 import './globals.css'
 
 export default function Home() {
@@ -32,6 +34,8 @@ export default function Home() {
     | 'ai-recommendations'
     | 'qa-system'
     | 'search-books'
+    | 'digital-library'
+    | 'ai-chat'
   >('menu')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [currentUser, setCurrentUser] = useState<any>(null)
@@ -205,6 +209,14 @@ export default function Home() {
           userId={currentUser.id}
           onBack={() => setMode('student-dashboard')}
         />
+      )}
+
+      {mode === 'digital-library' && (
+        <DigitalLibrary onNavigate={handleNavigate} />
+      )}
+
+      {mode === 'ai-chat' && (
+        <AIChat onClose={() => setMode(currentUser ? 'student-dashboard' : 'menu')} />
       )}
     </main>
   )

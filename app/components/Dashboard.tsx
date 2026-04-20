@@ -5,7 +5,7 @@ import BooksSection from './BooksSection'
 import MembersSection from './MembersSection'
 import TransactionsSection from './TransactionsSection'
 import NotificationsSection from './NotificationsSection'
-import { LogOut, Home, BookOpen, Users, Send, Bell, Sparkles, Users2, QrCode } from 'lucide-react'
+import { LogOut, Home, BookOpen, Users, Send, Bell, Sparkles, Users2, QrCode, Bot } from 'lucide-react'
 
 interface DashboardProps {
   user?: any
@@ -13,6 +13,7 @@ interface DashboardProps {
   onAdminLogin?: (user: any) => void
   onKioskMode?: () => void
   onLoginRegister?: () => void
+  onAIChat?: () => void
 }
 
 export default function Dashboard({
@@ -21,6 +22,7 @@ export default function Dashboard({
   onAdminLogin,
   onKioskMode,
   onLoginRegister,
+  onAIChat,
 }: DashboardProps) {
   const [activeSection, setActiveSection] = useState('home')
   const [adminPassword, setAdminPassword] = useState('')
@@ -142,6 +144,12 @@ export default function Dashboard({
               <QrCode size={32} />
               <span>Kiosk Mode</span>
               <p>Borrow with Barcode</p>
+            </button>
+
+            <button onClick={onAIChat} className="menu-btn secondary">
+              <Bot size={32} />
+              <span>AI Assistant</span>
+              <p>Ask Questions</p>
             </button>
           </div>
 

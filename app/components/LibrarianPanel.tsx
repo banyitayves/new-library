@@ -1,8 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, Users, CheckCircle, XCircle, Mail, Phone, Calendar, Upload, LogOut } from 'lucide-react'
+import { Shield, Users, CheckCircle, XCircle, Mail, Phone, Calendar, Upload, LogOut, BarChart3, MessageSquare, BookPlus, UserPlus } from 'lucide-react'
 import ImportCSV from './ImportCSV'
+import BorrowingReport from './BorrowingReport'
+import SMSNotifications from './SMSNotifications'
+import RegisterBooks from './RegisterBooks'
+import RegisterMembers from './RegisterMembers'
 import {
   getPendingRegistrations,
   approveRegistration,
@@ -16,6 +20,7 @@ interface LibrarianPanelProps {
 
 export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
   const [view, setView] = useState<'pending' | 'approved' | 'all'>('pending')
+  const [currentSection, setCurrentSection] = useState<'users' | 'reports' | 'sms' | 'books' | 'members'>('users')
   const [pendingUsers, setPendingUsers] = useState<any[]>([])
   const [approvedUsers, setApprovedUsers] = useState<any[]>([])
   const [allUsers, setAllUsers] = useState<any[]>([])
@@ -58,6 +63,25 @@ export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
 
   const currentList = getCurrentList()
 
+  if (currentSection === 'reports') {
+    return <BorrowingReport onBack={() => setCurrentSection('users')} />
+  }
+
+  if (currentSection === 'sms') {
+    return <SMSNotifications onBack={() => setCurrentSection('users')} />
+  }
+
+  if (currentSection === 'books') {
+    return <RegisterBooks onBack={() => setCurrentSection('users')} onSuccess={() => setCurrentSection('users')} />
+  }
+
+  if (currentSection === 'members') {
+    return <RegisterMembers onBack={() => setCurrentSection('users')} onSuccess={() => {
+      setCurrentSection('users')
+      loadUsers()
+    }} />
+  }
+
   return (
     <div className="librarian-container">
       <div className="librarian-header">
@@ -69,6 +93,18 @@ export default function LibrarianPanel({ onBack }: LibrarianPanelProps) {
           </div>
         </div>
         <div className="header-actions">
+          <button onClick={() => setCurrentSection('reports')} className="btn btn-primary">
+            <BarChart3 size={18} /> Reports
+          </button>
+          <button onClick={() => setCurrentSection('sms')} className="btn btn-primary">
+            <MessageSquare size={18} /> SMS Notify
+          </button>
+          <button onClick={() => setCurrentSection('books')} className="btn btn-primary">
+            <BookPlus size={18} /> Add Book
+          </button>
+          <button onClick={() => setCurrentSection('members')} className="btn btn-primary">
+            <UserPlus size={18} /> Add Member
+          </button>
           <button onClick={() => setShowImportModal(true)} className="btn btn-primary">
             <Upload size={18} /> Import CSV
           </button>

@@ -10,6 +10,7 @@ import {
   Heart,
   Clock,
   Search,
+  Bot,
 } from 'lucide-react'
 import {
   getBooks,
@@ -135,6 +136,13 @@ export default function StudentDashboard({
 
         <div className="feature-buttons">
           <button
+            onClick={() => onNavigate('ai-chat')}
+            className="feature-btn"
+          >
+            <Bot size={20} />
+            <span>AI Assistant</span>
+          </button>
+          <button
             onClick={() => onNavigate('search-books')}
             className="feature-btn"
           >
@@ -147,6 +155,13 @@ export default function StudentDashboard({
           >
             <Sparkles size={20} />
             <span>AI Recommendations</span>
+          </button>
+          <button
+            onClick={() => onNavigate('digital-library')}
+            className="feature-btn"
+          >
+            <BookOpen size={20} />
+            <span>Digital Library</span>
           </button>
           <button
             onClick={() => onNavigate('qa-system')}
