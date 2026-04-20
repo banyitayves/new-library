@@ -16,6 +16,8 @@ interface ChatMessage {
   timestamp: Date
   confidence?: number
   source?: string
+  relatedBooks?: string[]
+  webSearchSuggestion?: boolean
 }
 
 export default function AIChat({ onClose, embedded = false }: AIChatProps) {
@@ -73,7 +75,7 @@ export default function AIChat({ onClose, embedded = false }: AIChatProps) {
           source: 'library-stats',
         }
       } else {
-        // Generate AI response
+        // Generate AI response (now handles library, books, general, web, and unknown)
         const response = generateAIResponse(input)
 
         aiResponse = {
@@ -83,6 +85,8 @@ export default function AIChat({ onClose, embedded = false }: AIChatProps) {
           timestamp: new Date(),
           confidence: response.confidence,
           source: response.source,
+          relatedBooks: response.relatedBooks,
+          webSearchSuggestion: response.webSearchSuggestion,
         }
       }
 
@@ -98,10 +102,26 @@ export default function AIChat({ onClose, embedded = false }: AIChatProps) {
     'How do reading badges work?',
     'Can I read books online?',
     'How do I register?',
+    'What is photosynthesis?',
+    'Tell me about World War 2',
+    'How does artificial intelligence work?',
+    'What are renewable energy sources?',
   ]
 
   const handleSuggestion = (question: string) => {
     setInput(question)
+  }
+
+  const getSourceLabel = (source: string): string => {
+    const labels: Record<string, string> = {
+      'library': '📚 Library System',
+      'books': '📖 Our Books',
+      'general': '💡 General Knowledge',
+      'web': '🌐 Web Search',
+      'library-stats': '📊 Library Stats',
+      'unknown': '❓ Unknown',
+    }
+    return labels[source] || source
   }
 
   if (!embedded) {
@@ -130,15 +150,37 @@ export default function AIChat({ onClose, embedded = false }: AIChatProps) {
               </div>
               <div className="message-content">
                 <p className="message-text">{msg.content}</p>
-                {msg.role === 'ai' && msg.confidence && (
-                  <div className="message-meta">
-                    <span className="confidence">
-                      Confidence: {Math.round(msg.confidence)}%
-                    </span>
-                    {msg.source && (
-                      <span className="source">Source: {msg.source}</span>
+                
+                {msg.role === 'ai' && (
+                  <>
+                    {msg.relatedBooks && msg.relatedBooks.length > 0 && (
+                      <div className="related-books">
+                        <p className="related-books-title">📚 Related Books:</p>
+                        <ul>
+                          {msg.relatedBooks.map((book, idx) => (
+                            <li key={idx}>{book}</li>
+                          ))}
+                        </ul>
+                      </div>
                     )}
-                  </div>
+                    
+                    <div className="message-meta">
+                      <span className={`confidence confidence-${Math.round(msg.confidence || 0)}`}>
+                        Confidence: {Math.round(msg.confidence || 0)}%
+                      </span>
+                      {msg.source && (
+                        <span className={`source source-${msg.source}`}>
+                          {getSourceLabel(msg.source)}
+                        </span>
+                      )}
+                    </div>
+
+                    {msg.webSearchSuggestion && (
+                      <div className="web-search-suggestion">
+                        <p>💡 Want to learn more? Try searching online or check our library books!</p>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -572,5 +614,101 @@ export const styles = `
     .chat-header h1 {
       font-size: 18px;
     }
+  }
+
+  .related-books {
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(102, 126, 234, 0.1);
+    border-left: 3px solid #667eea;
+    border-radius: 4px;
+  }
+
+  .related-books-title {
+    margin: 0 0 8px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: #667eea;
+  }
+
+  .related-books ul {
+    margin: 0;
+    padding-left: 20px;
+    list-style: circle;
+  }
+
+  .related-books li {
+    font-size: 12px;
+    color: #555;
+    margin: 4px 0;
+  }
+
+  .web-search-suggestion {
+    margin-top: 12px;
+    padding: 10px;
+    background: rgba(255, 152, 0, 0.1);
+    border-left: 3px solid #ff9800;
+    border-radius: 4px;
+  }
+
+  .web-search-suggestion p {
+    margin: 0;
+    font-size: 12px;
+    color: #ff6f00;
+    font-weight: 500;
+  }
+
+  .confidence {
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: #f0f0f0;
+    color: #333;
+  }
+
+  .confidence-80,
+  .confidence-90,
+  .confidence-95,
+  .confidence-100 {
+    background: rgba(76, 175, 80, 0.2);
+    color: #2e7d32;
+  }
+
+  .confidence-50,
+  .confidence-45 {
+    background: rgba(255, 152, 0, 0.2);
+    color: #e65100;
+  }
+
+  .source {
+    padding: 4px 8px;
+    border-radius: 12px;
+    background: #f0f0f0;
+    color: #555;
+    font-weight: 500;
+  }
+
+  .source-library {
+    background: rgba(102, 126, 234, 0.2);
+    color: #4a4a9a;
+  }
+
+  .source-books {
+    background: rgba(76, 175, 80, 0.2);
+    color: #2e7d32;
+  }
+
+  .source-general {
+    background: rgba(33, 150, 243, 0.2);
+    color: #1565c0;
+  }
+
+  .source-web {
+    background: rgba(255, 152, 0, 0.2);
+    color: #e65100;
+  }
+
+  .source-unknown {
+    background: rgba(158, 158, 158, 0.2);
+    color: #616161;
   }
 `

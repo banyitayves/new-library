@@ -126,6 +126,7 @@ export default function Home() {
           onAdminLogin={handleAdminLogin}
           onKioskMode={() => setMode('kiosk-login')}
           onLoginRegister={() => setMode('login-register')}
+          onAIChat={() => setMode('ai-chat')}
         />
       )}
 

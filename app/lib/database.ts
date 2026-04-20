@@ -234,10 +234,24 @@ export function addMember(member: Omit<Member, 'id'>) {
 export function borrowBook(bookId: string, memberId: string) {
   const books = getBooks()
   const transactions = getTransactions()
+  const users = getUsers()
 
   const book = books.find(b => b.id === bookId)
   if (!book || book.availableCopies <= 0) {
     throw new Error('Book not available')
+  }
+
+  // Check if user already has 1 book borrowed (limit is 1 book per person)
+  const userActiveBorrowings = transactions.filter(
+    t => t.memberId === memberId && !t.returnDate
+  )
+  if (userActiveBorrowings.length >= 1) {
+    throw new Error('You can only borrow 1 book at a time. Please return your current book first.')
+  }
+
+  const member = users.find(u => u.id === memberId)
+  if (!member) {
+    throw new Error('Member not found')
   }
 
   book.availableCopies -= 1
@@ -257,6 +271,36 @@ export function borrowBook(bookId: string, memberId: string) {
   transactions.push(transaction)
   saveBooks(books)
   saveTransactions(transactions)
+
+  // Send notification to librarian about the borrowing
+  if (typeof window !== 'undefined') {
+    try {
+      const notificationsKey = 'notifications'
+      const stored = localStorage.getItem(notificationsKey)
+      const allNotifications = stored ? JSON.parse(stored) : []
+      
+      // Get librarian user
+      const librarian = users.find(u => u.role === 'librarian')
+      if (librarian) {
+        const librarianNotification = {
+          id: Date.now().toString(),
+          userId: librarian.id,
+          type: 'borrow-notification',
+          title: 'New Book Borrowed',
+          message: `${member.name} borrowed "${book.title}" by ${book.author}. Please monitor and send reminders if needed.`,
+          timestamp: new Date().toISOString(),
+          read: false,
+          bookId,
+          borrowedBy: memberId,
+          memberName: member.name,
+        }
+        allNotifications.push(librarianNotification)
+        localStorage.setItem(notificationsKey, JSON.stringify(allNotifications))
+      }
+    } catch (error) {
+      console.error('Error sending librarian notification:', error)
+    }
+  }
 
   return transaction
 }

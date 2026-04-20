@@ -74,7 +74,7 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
         role: regRole,
         class: regRole === 'student' ? regClass : undefined,
         interests: [],
-        maxBooks: 5,
+        maxBooks: 1,
         status: 'pending',
       })
 

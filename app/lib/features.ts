@@ -25,12 +25,14 @@ export interface UserBadge {
 export interface Notification {
   id: string
   userId: string
-  type: 'due-date' | 'overdue' | 'reservation' | 'fine' | 'system'
+  type: 'due-date' | 'overdue' | 'reservation' | 'fine' | 'system' | 'help-request' | 'borrow-notification'
   title: string
   message: string
   timestamp: string
   read: boolean
   bookId?: string
+  borrowedBy?: string
+  memberName?: string
 }
 
 // CSV Import/Export functions
@@ -58,7 +60,7 @@ export function parseCSVMembers(csvContent: string): any[] {
         studentId: member.studentid || `GSB-${Math.floor(Math.random() * 10000)}`,
         class: member.class || 'S1',
         joinDate: new Date().toISOString(),
-        maxBooks: 5,
+        maxBooks: 1,
         cardBarcode: member.barcode || `BC-${Math.random().toString(36).substr(2, 9)}`,
       })
     }
@@ -288,4 +290,74 @@ export function searchUsers(query: string, users: any[]): any[] {
     u.studentId?.toLowerCase().includes(q) ||
     u.class?.includes(q.toUpperCase())
   )
+}
+
+// ===== HELP REQUEST SYSTEM FOR LIBRARIAN =====
+
+export function sendHelpRequest(userId: string, userName: string, subject: string, message: string, userEmail?: string): Notification {
+  if (typeof window === 'undefined') return {} as Notification
+
+  try {
+    const notifications = getAllNotifications()
+    const librarians = JSON.parse(localStorage.getItem('users') || '[]').filter((u: any) => u.role === 'librarian')
+    
+    if (librarians.length === 0) {
+      console.warn('No librarian found in system')
+      return {} as Notification
+    }
+
+    const librarianId = librarians[0].id
+    const helpNotification: Notification = {
+      id: Date.now().toString(),
+      userId: librarianId,
+      type: 'help-request',
+      title: `Help Request from ${userName}`,
+      message: `${userName} needs help: ${subject}\n\n${message}${userEmail ? `\n\nContact: ${userEmail}` : ''}`,
+      timestamp: new Date().toISOString(),
+      read: false,
+      bookId: undefined,
+    }
+
+    notifications.push(helpNotification)
+    localStorage.setItem('notifications', JSON.stringify(notifications))
+    
+    return helpNotification
+  } catch (error) {
+    console.error('Error sending help request:', error)
+    return {} as Notification
+  }
+}
+
+export function getLibrarianHelpRequests(): Notification[] {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const notifications = getAllNotifications()
+    const librarians = JSON.parse(localStorage.getItem('users') || '[]').filter((u: any) => u.role === 'librarian')
+    
+    if (librarians.length === 0) return []
+
+    const librarianId = librarians[0].id
+    return notifications.filter(n => n.userId === librarianId && n.type === 'help-request')
+  } catch (error) {
+    console.error('Error getting help requests:', error)
+    return []
+  }
+}
+
+export function getBorrowNotifications(): Notification[] {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const notifications = getAllNotifications()
+    const librarians = JSON.parse(localStorage.getItem('users') || '[]').filter((u: any) => u.role === 'librarian')
+    
+    if (librarians.length === 0) return []
+
+    const librarianId = librarians[0].id
+    return notifications.filter(n => n.userId === librarianId && n.type === 'borrow-notification')
+  } catch (error) {
+    console.error('Error getting borrow notifications:', error)
+    return []
+  }
 }

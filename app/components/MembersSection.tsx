@@ -13,7 +13,7 @@ export default function MembersSection() {
     name: '',
     email: '',
     phone: '',
-    maxBooks: 5,
+    maxBooks: 1,
     studentId: '',
     cardBarcode: '',
     class: 'S1',
@@ -28,7 +28,7 @@ export default function MembersSection() {
     e.preventDefault()
     const newMember = addMember(formData)
     setMembers([...members, newMember])
-    setFormData({ name: '', email: '', phone: '', maxBooks: 5, studentId: '', cardBarcode: '', class: 'S1' })
+    setFormData({ name: '', email: '', phone: '', maxBooks: 1, studentId: '', cardBarcode: '', class: 'S1' })
     setShowForm(false)
   }
 
