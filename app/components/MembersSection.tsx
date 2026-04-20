@@ -121,26 +121,26 @@ export default function MembersSection() {
               </select>
             </div>
           </div>
-              <input
-                type="tel"
-                value={formData.phone}
-                onChange={(e) =>
-                  setFormData({ ...formData, phone: e.target.value })
-                }
-              />
-            </div>
-            <div className="form-group">
-              <label>Max Books</label>
-              <input
-                type="number"
-                min="1"
-                value={formData.maxBooks}
-                onStudent ID</th>
-              <th>Classe={(e) =>
-                  setFormData({ ...formData, maxBooks: parseInt(e.target.value) })
-                }
-              />
-            </div>
+          <div className="form-group">
+            <label>Phone</label>
+            <input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
+            />
+          </div>
+          <div className="form-group">
+            <label>Max Books</label>
+            <input
+              type="number"
+              min="1"
+              value={formData.maxBooks}
+              onChange={(e) =>
+                setFormData({ ...formData, maxBooks: parseInt(e.target.value) })
+              }
+            />
           </div>
           <div className="form-actions">
             <button type="submit" className="btn btn-primary">

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { BookOpen, Barcode, LogIn } from 'lucide-react'
+import { BookOpen, QrCode, LogIn } from 'lucide-react'
 import { findMemberByStudentId, findMemberByBarcode } from '@/lib/database'
 
 interface KioskLoginProps {
