@@ -73,7 +73,7 @@ export default function KioskLogin({ onLogin, onBackToMain }: KioskLoginProps) {
               setError('')
             }}
           >
-            <Barcode size={20} /> Scan Card
+            <QrCode size={20} /> Scan Card
           </button>
         </div>
 

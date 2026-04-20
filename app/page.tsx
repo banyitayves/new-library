@@ -55,10 +55,15 @@ export default function Home() {
   }, [])
 
   const handleAdminLogin = (user: any) => {
-    setCurrentUser(user)
+    const librarianUser = {
+      ...user,
+      role: 'librarian',
+      status: 'approved',
+    }
+    setCurrentUser(librarianUser)
     setIsAuthenticated(true)
-    setMode('admin')
-    localStorage.setItem('currentUser', JSON.stringify(user))
+    setMode('librarian-panel')
+    localStorage.setItem('currentUser', JSON.stringify(librarianUser))
   }
 
   const handleKioskLogin = (user: any) => {
@@ -166,6 +171,10 @@ export default function Home() {
 
       {mode === 'librarian-panel' && (
         <LibrarianPanel onBack={handleLogout} />
+      )}
+
+      {mode === 'deputy-panel' && (
+        <DeputyPanel onLogout={handleLogout} />
       )}
 
       {mode === 'guest-mode' && (

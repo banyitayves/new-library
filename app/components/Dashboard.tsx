@@ -25,6 +25,8 @@ export default function Dashboard({
   const [activeSection, setActiveSection] = useState('home')
   const [adminPassword, setAdminPassword] = useState('')
   const [showAdminLogin, setShowAdminLogin] = useState(false)
+  const [deputyPassword, setDeputyPassword] = useState('')
+  const [showDeputyLogin, setShowDeputyLogin] = useState(false)
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,6 +35,19 @@ export default function Dashboard({
       const adminUser = { id: 'admin', name: 'Librarian', role: 'librarian' }
       onAdminLogin?.(adminUser)
       setAdminPassword('')
+    } else {
+      alert('Invalid password')
+    }
+  }
+
+  const handleDeputyLogin = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Simple password check for deputy (in production, use proper authentication)
+    if (deputyPassword === 'deputy123') {
+      const deputyUser = { id: 'deputy', name: 'Deputy Head Teacher', role: 'deputy', status: 'approved' }
+      // Simulate login by storing deputy user
+      localStorage.setItem('currentUser', JSON.stringify(deputyUser))
+      window.location.reload() // Reload to trigger mode detection
     } else {
       alert('Invalid password')
     }
@@ -86,6 +101,40 @@ export default function Dashboard({
                 <Home size={32} />
                 <span>Librarian</span>
                 <p>Admin Control Panel</p>
+              </button>
+            )}
+
+            {showDeputyLogin ? (
+              <form onSubmit={handleDeputyLogin} className="admin-login-form">
+                <input
+                  type="password"
+                  value={deputyPassword}
+                  onChange={(e) => setDeputyPassword(e.target.value)}
+                  placeholder="Enter deputy password"
+                  autoFocus
+                />
+                <button type="submit" className="btn btn-primary">
+                  Login
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowDeputyLogin(false)
+                    setDeputyPassword('')
+                  }}
+                  className="btn btn-secondary"
+                >
+                  Cancel
+                </button>
+              </form>
+            ) : (
+              <button
+                onClick={() => setShowDeputyLogin(true)}
+                className="menu-btn secondary"
+              >
+                <Users2 size={32} />
+                <span>Deputy Head</span>
+                <p>View Students & History</p>
               </button>
             )}
 
@@ -328,6 +377,5 @@ export default function Dashboard({
         </main>
       </div>
     </div>
-  )
   )
 }
