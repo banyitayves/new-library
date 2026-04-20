@@ -9,6 +9,7 @@ import {
   BarChart3,
   Heart,
   Clock,
+  Search,
 } from 'lucide-react'
 import {
   getBooks,
@@ -134,14 +135,21 @@ export default function StudentDashboard({
 
         <div className="feature-buttons">
           <button
-            onClick={() => onNavigate('recommendations')}
+            onClick={() => onNavigate('search-books')}
+            className="feature-btn"
+          >
+            <Search size={20} />
+            <span>Search Books</span>
+          </button>
+          <button
+            onClick={() => onNavigate('ai-recommendations')}
             className="feature-btn"
           >
             <Sparkles size={20} />
             <span>AI Recommendations</span>
           </button>
           <button
-            onClick={() => onNavigate('qa')}
+            onClick={() => onNavigate('qa-system')}
             className="feature-btn"
           >
             <MessageCircle size={20} />
