@@ -4,7 +4,7 @@ import { checkDueBooks, sendDueReminders } from '@/lib/smsNotifications'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // This endpoint should be called by a scheduled job (e.g., cron)
     const dueBooks = await checkDueBooks()
