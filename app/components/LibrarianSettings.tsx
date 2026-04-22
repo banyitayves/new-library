@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Mail, Bell, CheckCircle, AlertCircle, Settings } from 'lucide-react'
+import { Mail, Bell, CheckCircle, AlertCircle } from 'lucide-react'
 import { getLibrarianSettings, setLibrarianEmail, updateLibrarianNotificationSettings } from '@/lib/database'
 
 interface LibrarianSettingsProps {
@@ -61,8 +61,8 @@ export default function LibrarianSettings({ onBack, librarianId }: LibrarianSett
     setLoading(true)
     try {
       const updated = updateLibrarianNotificationSettings(librarianId || 'librarian', {
-        notifyOnBorrow,
-        notifyOnReturn,
+        notifyOnBorrow: notifyBorrow,
+        notifyOnReturn: notifyReturn,
         notifyOnHelpRequest: notifyHelp,
       })
       setSettings(updated)

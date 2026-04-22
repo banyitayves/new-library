@@ -1,0 +1,23 @@
+
+> gs-busanza-library@1.0.0 build
+> next build
+
+Γû▓ Next.js 16.2.4 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 8.6s
+  Running TypeScript ...
+Failed to type check.
+
+./app/components/SMSNotifications.tsx:5:47
+Type error: Module '"@/lib/database"' has no exported member 'addNotification'.
+
+  3 | import { useState, useEffect } from 'react'
+  4 | import { Send, MessageSquare, CheckCircle, Phone } from 'lucide-react'
+> 5 | import { getUsers, getTransactions, getBooks, addNotification } from '@/lib/database'
+    |                                               ^
+  6 | import { getNotifications, addNotification as addFeatureNotification } from '@/lib/features'
+  7 |
+  8 | interface SMSNotificationsProps {
+Next.js build worker exited with code: 1 and signal: null

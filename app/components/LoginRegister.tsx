@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail, Lock, User, Phone, BookOpen, LogIn, UserPlus } from 'lucide-react'
+import { Mail, Lock, User, Phone, LogIn, UserPlus } from 'lucide-react'
 import { registerUser, loginUser, STREAM_OPTIONS, STREAM_NAMES, type StreamCombination } from '@/lib/database'
 
 interface LoginRegisterProps {
@@ -74,7 +74,7 @@ export default function LoginRegister({ onLoginSuccess, onGuestMode }: LoginRegi
         return
       }
 
-      const newUser = registerUser({
+      registerUser({
         name: regName,
         email: regEmail,
         password: regPassword,

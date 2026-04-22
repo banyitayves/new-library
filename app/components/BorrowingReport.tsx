@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Download, Filter, BarChart3, AlertCircle, CheckCircle } from 'lucide-react'
+import { Download } from 'lucide-react'
 import { getUsers, getBooks, getTransactions } from '@/lib/database'
 
 interface BorrowingReportProps {

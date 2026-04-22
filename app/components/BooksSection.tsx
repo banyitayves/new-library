@@ -26,6 +26,7 @@ export default function BooksSection() {
     e.preventDefault()
     const newBook = addBook({
       ...formData,
+      tags: [],
       availableCopies: formData.copies,
       addedDate: new Date().toISOString(),
     })

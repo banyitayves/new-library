@@ -50,6 +50,8 @@ export interface Book {
   addedDate: string
   tags: string[] // For matching with interests
   summary?: string
+  isDigital?: boolean
+  coverColor?: string
 }
 
 export interface Member {

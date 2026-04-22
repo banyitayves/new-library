@@ -1,12 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { Sparkles, BookOpen, Star, Heart, X } from 'lucide-react'
-import { generateBookRecommendations, updateUserInterests, getBooks } from '@/lib/database'
+import { useState } from 'react'
+import { Sparkles, BookOpen, Heart } from 'lucide-react'
+import { generateBookRecommendations, updateUserInterests } from '@/lib/database'
 
 interface AIRecommendationsProps {
   userId: string
-  userName: string
   onBack: () => void
 }
 
@@ -33,15 +32,12 @@ const STUDY_INTERESTS = [
 
 export default function AIRecommendations({
   userId,
-  userName,
   onBack,
 }: AIRecommendationsProps) {
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
   const [recommendations, setRecommendations] = useState<any[]>([])
   const [showRecommendations, setShowRecommendations] = useState(false)
   const [likedBooks, setLikedBooks] = useState<string[]>([])
-
-  const allBooks = getBooks()
 
   const handleToggleInterest = (interest: string) => {
     setSelectedInterests(prev =>

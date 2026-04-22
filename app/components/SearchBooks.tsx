@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search, Filter, Star, TrendingUp } from 'lucide-react'
+import { Search, Filter, TrendingUp } from 'lucide-react'
 import { getBooks, getTransactions } from '@/lib/database'
 import { searchBooks, getUserBadges, checkReadingBadges } from '@/lib/features'
 

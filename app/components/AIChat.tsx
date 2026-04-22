@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import { Send, MessageCircle, Sparkles, X, Loader } from 'lucide-react'
+import { Send, Sparkles, X, Loader } from 'lucide-react'
 import { generateAIResponse, answerLibraryQuestion } from '@/lib/aiAssistant'
 
 interface AIChatProps {

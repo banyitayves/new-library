@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Send, MessageSquare, CheckCircle, AlertCircle, Phone } from 'lucide-react'
-import { getUsers, getTransactions, getBooks, addNotification } from '@/lib/database'
-import { getNotifications, addNotification as addFeatureNotification } from '@/lib/features'
+import { Send, MessageSquare, CheckCircle, Phone } from 'lucide-react'
+import { getUsers, getTransactions, getBooks } from '@/lib/database'
+import { addNotification } from '@/lib/features'
 
 interface SMSNotificationsProps {
   onBack: () => void

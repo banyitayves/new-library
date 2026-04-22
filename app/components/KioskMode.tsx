@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { BookOpen, MessageSquare, Users, LogOut, Home, Plus, X } from 'lucide-react'
-import { getBooks, getTransactions, borrowBook, getMembers } from '@/lib/database'
+import { BookOpen, MessageSquare, Users, LogOut, Home, Plus } from 'lucide-react'
+import { getBooks, getTransactions, borrowBook } from '@/lib/database'
 import InboxSection from './InboxSection'
 import PeerChat from './PeerChat'
 import type { Book, Transaction } from '@/lib/database'
@@ -48,7 +48,7 @@ export default function KioskMode({ user, onLogout, onBackToMain }: KioskModePro
     }
 
     try {
-      const transaction = borrowBook(selectedBook, user.id)
+      borrowBook(selectedBook, user.id)
       setCurrentBooks([...currentBooks, selectedBook])
       setSelectedBook('')
       setMessage('✓ Book borrowed successfully! Due in 2 weeks.')

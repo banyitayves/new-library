@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Users, Book, RotateCcw, LogOut, Search } from 'lucide-react'
+import { Users, Book, LogOut, Search } from 'lucide-react'
 import { getUsers, getTransactions, getBooks, User, Transaction } from '@/lib/database'
 
 interface DeputyPanelProps {

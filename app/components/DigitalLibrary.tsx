@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { BookOpen, Eye, Download, Share2, Heart, MessageCircle } from 'lucide-react'
+import { BookOpen, Eye, Heart } from 'lucide-react'
 import PDFReader from './PDFReader'
 import { getBooks } from '@/lib/database'
 
@@ -72,7 +72,7 @@ const SAMPLE_DIGITAL_BOOKS = [
   },
 ]
 
-export default function DigitalLibrary({ onNavigate }: DigitalLibraryProps) {
+export default function DigitalLibrary(_props: DigitalLibraryProps) {
   const [books, setBooks] = useState<any[]>([])
   const [selectedBook, setSelectedBook] = useState<any>(null)
   const [likedBooks, setLikedBooks] = useState<string[]>([])

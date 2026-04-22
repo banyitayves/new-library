@@ -88,7 +88,7 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
         return
       }
 
-      const newMember = registerUser({
+      registerUser({
         name: formData.name,
         email: formData.email,
         password: formData.password,
@@ -97,8 +97,10 @@ export default function RegisterMembers({ onBack, onSuccess }: RegisterMembersPr
         class: role === 'student' ? formData.class : undefined,
         stream: role === 'student' && formData.stream ? (formData.stream as StreamCombination) : undefined,
         studentId: role === 'student' ? formData.studentId : undefined,
-        barcode: formData.barcode || `BAR-${Math.random().toString(36).substr(2, 10)}`,
+        cardBarcode: formData.barcode || `BAR-${Math.random().toString(36).substr(2, 10)}`,
         status: 'approved', // Auto-approve for manually added members
+        maxBooks: role === 'student' ? 5 : 20,
+        interests: [],
       })
 
       setMessage({ type: 'success', text: `${role === 'student' ? 'Student' : 'Teacher'} "${formData.name}" registered successfully!` })

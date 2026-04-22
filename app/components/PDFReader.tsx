@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { ChevronLeft, ChevronRight, Download, Eye, X } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Download, X } from 'lucide-react'
 
 interface PDFReaderProps {
   book: any
@@ -11,7 +11,7 @@ interface PDFReaderProps {
 export default function PDFReader({ book, onClose }: PDFReaderProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const [isLoading, setIsLoading] = useState(true)
+  const [_isLoading, setIsLoading] = useState(true)
 
   // Simulated PDF content - in production, use a real PDF library like react-pdf
   const getSampleContent = () => {

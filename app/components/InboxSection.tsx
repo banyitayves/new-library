@@ -12,7 +12,7 @@ interface InboxSectionProps {
 export default function InboxSection({ user }: InboxSectionProps) {
   const [messages, setMessages] = useState<Message[]>([])
   const [messageText, setMessageText] = useState('')
-  const [activeConversation, setActiveConversation] = useState<string | null>(null)
+  const [_activeConversation, _setActiveConversation] = useState<string | null>(null)
 
   useEffect(() => {
     const storedMessages = getMessages()
